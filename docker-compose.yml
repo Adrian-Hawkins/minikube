@@ -1,0 +1,8 @@
+services:
+  minikube:
+    build:
+      context: .
+    container_name: minikube-container
+    privileged: true
+#    tty: true
+#    stdin_open: true
