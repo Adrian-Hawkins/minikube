@@ -1,0 +1,2 @@
+class HelloHandler:
+    pass

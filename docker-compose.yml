@@ -1,8 +1,29 @@
+networks:
+  loki:
+    driver: bridge
 services:
-  minikube:
+  loki:
+    image: grafana/loki:2.8.0
+    volumes:
+      - ./loki:/etc/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/loki-config.yml -config.expand-env=true
+    networks:
+      - loki
+  pythonapp:
     build:
-      context: .
-    container_name: minikube-container
-    privileged: true
-#    tty: true
-#    stdin_open: true
+      context: ./services.user
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - loki
+  grafana:
+    build:
+        context: ./Grafana
+        dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
