@@ -26,3 +26,16 @@ services:
       - "3000:3000"
     networks:
       - loki
+  terraform:
+    build:
+      context: ./Terraform
+      dockerfile: Dockerfile
+  jenkins:
+    build:
+      context: ./Jenkins
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - loki
